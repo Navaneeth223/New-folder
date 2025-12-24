@@ -26,3 +26,25 @@ button {
   border-radius: 8px;
   cursor: pointer;
 }
+
+input {
+  padding: 8px;
+  border-radius: 6px;
+  border: none;
+  margin-right: 5px;
+}
+
+.task-input {
+  display: flex;
+  justify-content: center;
+}
+
+.done {
+  text-decoration: line-through;
+  opacity: 0.6;
+  cursor: pointer;
+}
+
+p {
+  cursor: pointer;
+}
