@@ -11,9 +11,8 @@ export default function Timer() {
   const circumference = 2 * Math.PI * radius;
   const progress = (time / totalTime) * circumference;
 
-    // === dynamic color based on progress ===
-  let ringColor = "#10b981"; // green
-
+  // === dynamic color based on remaining time ===
+  let ringColor = "#10b981"; // green default
   const percentage = time / totalTime;
 
   if (percentage < 0.2) {
@@ -21,7 +20,6 @@ export default function Timer() {
   } else if (percentage < 0.5) {
     ringColor = "#fcd34d"; // yellow
   }
-
 
   useEffect(() => {
     if (!running) return;
@@ -68,19 +66,26 @@ export default function Timer() {
             cx="100"
             cy="100"
             r={radius}
+            fill="none"
+            stroke="#ddd"
+            strokeWidth="10"
           />
+          
           <circle
   className="progress"
   cx="100"
   cy="100"
   r={radius}
+  fill="none"
+  stroke={ringColor}
+  strokeWidth="10"
   strokeDasharray={circumference}
   strokeDashoffset={circumference - progress}
-  stroke={ringColor}  // <=== add this
+  strokeLinecap="round"
 />
 
-          
         </svg>
+
         <div className="time-label">{minutes}:{seconds}</div>
       </div>
 
