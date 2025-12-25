@@ -1,9 +1,27 @@
 import { useEffect, useState } from "react";
 
 export default function Timer() {
-  const [time, setTime] = useState(25 * 60);
+  const totalTime = 1 * 60; // 25 minutes
+  const [time, setTime] = useState(totalTime);
   const [running, setRunning] = useState(false);
   const [mute, setMute] = useState(false);
+
+  // === circle setup ===
+  const radius = 80;
+  const circumference = 2 * Math.PI * radius;
+  const progress = (time / totalTime) * circumference;
+
+    // === dynamic color based on progress ===
+  let ringColor = "#10b981"; // green
+
+  const percentage = time / totalTime;
+
+  if (percentage < 0.2) {
+    ringColor = "#ef4444"; // red
+  } else if (percentage < 0.5) {
+    ringColor = "#fcd34d"; // yellow
+  }
+
 
   useEffect(() => {
     if (!running) return;
@@ -14,7 +32,7 @@ export default function Timer() {
           setRunning(false);
           playSound();
           updateStats();
-          return 25 * 60;
+          return totalTime;
         }
         return t - 1;
       });
@@ -25,9 +43,7 @@ export default function Timer() {
 
   const playSound = () => {
     if (mute) return;
-    const audio = new Audio(
-      "https://actions.google.com/sounds/v1/alarms/beep_short.ogg"
-    );
+    const audio = new Audio("https://actions.google.com/sounds/v1/alarms/beep_short.ogg");
     audio.play();
   };
 
@@ -44,13 +60,35 @@ export default function Timer() {
 
   return (
     <div className="card">
-      <h2>{minutes}:{seconds}</h2>
+      {/* --- Circular Timer UI --- */}
+      <div className="circle-container">
+        <svg width="200" height="200">
+          <circle
+            className="track"
+            cx="100"
+            cy="100"
+            r={radius}
+          />
+          <circle
+  className="progress"
+  cx="100"
+  cy="100"
+  r={radius}
+  strokeDasharray={circumference}
+  strokeDashoffset={circumference - progress}
+  stroke={ringColor}  // <=== add this
+/>
+
+          
+        </svg>
+        <div className="time-label">{minutes}:{seconds}</div>
+      </div>
 
       <button onClick={() => setRunning(!running)}>
         {running ? "Pause" : "Start Focus"}
       </button>
 
-      <button onClick={() => setTime(25 * 60)}>Reset</button>
+      <button onClick={() => setTime(totalTime)}>Reset</button>
 
       <button onClick={() => setMute(!mute)}>
         {mute ? "🔇 Muted" : "🔊 Sound On"}

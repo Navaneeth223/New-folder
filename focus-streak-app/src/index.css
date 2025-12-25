@@ -48,3 +48,40 @@ input {
 p {
   cursor: pointer;
 }
+.circle-container {
+  position: relative;
+  width: 200px;
+  height: 200px;
+  margin: 0 auto 15px auto;
+}
+
+/* background ring */
+circle.track {
+  fill: none;
+  stroke: rgba(255, 255, 255, 0.08);
+  stroke-width: 10;
+}
+
+/* animated progress ring */
+circle.progress {
+  fill: none;
+  stroke: rgba(56, 189, 248, 0.6);
+  stroke-width: 10;
+  stroke-linecap: round;
+  transform: rotate(-90deg);
+  transform-origin: center;
+  transition: stroke-dashoffset 0.8s ease;
+  transition: stroke-dashoffset 0.8s ease, stroke 0.8s ease;
+
+}
+
+/* time text inside */
+.time-label {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 2rem;
+  font-weight: 600;
+}
